@@ -1,6 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
+import "bootstrap/dist/css/bootstrap.min.css"; // import Bootstrap CSS library
+import "./index.css"; // in addition, import our own CSS specs
+
 import SearchBar from "./components/search_bar";
 import VideoList from "./components/video_list";
 import VideoDetail from "./components/video_detail";
@@ -22,7 +25,7 @@ class App extends React.Component {
 	}
 	render() {
 		return (
-			<div>
+			<div className="row">
 				<SearchBar />
 				<VideoDetail video={this.state.videos[0]} />
 				<VideoList videos={this.state.videos} />
