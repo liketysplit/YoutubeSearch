@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css"; // import Bootstrap CSS library
 import "./index.css"; // in addition, import our own CSS specs
+import _ from "lodash";
 
 import SearchBar from "./components/search_bar";
 import VideoList from "./components/video_list";
@@ -15,7 +16,7 @@ const API_KEY = "AIzaSyD96qHmy3mUR_m8vTmbXSQdhTTavvjfp_A";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
-		this.videoSearch("surfboards");
+		this.videoSearch("world of warcraft");
 
 		this.state = {
 			videos: [],
@@ -34,19 +35,23 @@ class App extends React.Component {
 	}
 
 	render() {
+		const videoSearch = _.debounce(term => {
+			this.videoSearch(term);
+		}, 500);
+
 		return (
-			<div className="row">
-				<SearchBar
-					onSearchTermSearch={term => this.videoSearch(term)}
-				/>
-				<VideoDetail video={this.state.selectedVideo} />
-				<VideoList
-					// callback function
-					onVideoSelect={selectedVideo =>
-						this.setState({ selectedVideo })
-					}
-					videos={this.state.videos}
-				/>
+			<div>
+				<SearchBar onSearchTermSearch={videoSearch} />
+				<div className="row">
+					<VideoDetail video={this.state.selectedVideo} />
+					<VideoList
+						// callback function
+						onVideoSelect={selectedVideo =>
+							this.setState({ selectedVideo })
+						}
+						videos={this.state.videos}
+					/>
+				</div>
 			</div>
 		);
 	}
