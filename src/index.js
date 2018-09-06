@@ -15,13 +15,16 @@ const API_KEY = "AIzaSyD96qHmy3mUR_m8vTmbXSQdhTTavvjfp_A";
 class App extends React.Component {
 	constructor(props) {
 		super(props);
+		this.videoSearch("surfboards");
 
 		this.state = {
 			videos: [],
 			selectedVideo: null
 		};
+	}
 
-		YTSearch({ key: API_KEY, term: "surfboards" }, videos => {
+	videoSearch(term) {
+		YTSearch({ key: API_KEY, term: term }, videos => {
 			// ES6 syntax for this.setState({ videos: videos});
 			this.setState({
 				videos: videos,
@@ -29,10 +32,13 @@ class App extends React.Component {
 			});
 		});
 	}
+
 	render() {
 		return (
 			<div className="row">
-				<SearchBar />
+				<SearchBar
+					onSearchTermSearch={term => this.videoSearch(term)}
+				/>
 				<VideoDetail video={this.state.selectedVideo} />
 				<VideoList
 					// callback function
