@@ -26,7 +26,6 @@ class App extends React.Component {
 
 	videoSearch(term) {
 		YTSearch({ key: API_KEY, term: term }, videos => {
-			// ES6 syntax for this.setState({ videos: videos});
 			this.setState({
 				videos: videos,
 				selectedVideo: videos[0]
